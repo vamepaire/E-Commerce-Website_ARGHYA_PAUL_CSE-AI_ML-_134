@@ -6,6 +6,7 @@ const db = require("./config/mongoose_connect");
 const ownersRouter = require("./routes/ownersRouter");
 const usersRouter = require("./routes/usersRouter");
 const productsRouter = require("./routes/productsRouter");
+const config = require("config")
 
 require("dotenv").config();
 
@@ -20,6 +21,6 @@ app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 
 
-app.listen(process.env.PORT, () => {
-  console.log(`App listening on port ${process.env.PORT}!`);
+app.listen(`${config.get("PORT")}`, () => {
+  console.log(`App listening on port ${config.get("PORT")}!`);
 });

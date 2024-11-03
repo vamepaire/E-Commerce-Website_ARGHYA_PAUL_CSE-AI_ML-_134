@@ -29,3 +29,10 @@ ii) Login =>
     vi) contact no
     vii) Image
     viii) Orders
+
+-----------------------------------------------------------------
+
+//Enviroment Variable
+    export DEBUG=development:*
+    export NODE_ENV=development
+    
