@@ -25,7 +25,6 @@ const UserSchema = new mongoose.Schema({
     },
     contact_no: {
         type: Number,
-        required: true,
     },
     image: {
         type:String

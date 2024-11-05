@@ -1,0 +1,12 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/stylesheets/styles.css"> <!-- Adjusted the path -->
+<script src="/javascripts/flash-message.js" defer></script>
+
+
+<body>
+    <% if (message && message.length > 0) { %>
+    <div id="flash-message" class="bg-green-600 text-white font-semibold p-2 rounded-md mb-4 w-30 absolute top-5 left-1/2 transform -translate-x-1/2">
+      <h2><%= message %></h2>
+    </div>
+    <% } %>
+</body>
