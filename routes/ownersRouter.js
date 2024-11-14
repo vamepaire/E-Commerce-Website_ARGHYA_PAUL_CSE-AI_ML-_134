@@ -14,13 +14,14 @@ if (process.env.NODE_ENV === "development") {
               password: req.body.password,
               gstIn: req.body.gstIn,
          })
-          res.status(200).send(createdOwner);
+          res.status(200).send(createdOwner); 
       }
       
   });
 }
-router.get("/", (req, res) => {
-  res.send("Hello world from Owner router");
+router.get("/admin", (req, res) => {
+  let message = req.flash("message");
+  res.render("createProduct" , {message: message});
 });
 
 module.exports = router;

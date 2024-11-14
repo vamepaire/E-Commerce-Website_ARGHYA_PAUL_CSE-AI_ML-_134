@@ -1,6 +1,4 @@
 {
     "MONGO_URI": "mongodb://localhost:27017",
-    "PORT":"3000",
-    "SESSION_SECRET":"1234abcd4321efghjklmnlmnlmnlmnlmnlmnl",
-    "JWT_KEY":"1234abcd4321efghjklmnlmnlmnlmnlmnlmnl"
+    "PORT":"3000"
 }

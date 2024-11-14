@@ -25,6 +25,7 @@ async function userRegistrations(req, res) {
     });
     let token = generateToken(user);
     res.cookie("token", token);
+    req.flash("message", "Account Created successfully")
     res.redirect("/shopmate");
   } catch (err) {
     res.status(400).send({ error: err.message });

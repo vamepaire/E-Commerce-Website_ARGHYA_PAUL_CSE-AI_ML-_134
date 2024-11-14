@@ -14,20 +14,20 @@ const ProductSchema = new mongoose.Schema({
         default: 0,
     },
     image: {
-        type: String,
+        type: Buffer,
         required: true,
     },
     bgcolor: {
         type: String,
-        required: true
+        // required: true
     },
     panel_color: {
         type: String,
-        required: true
+        // required: true
     },
     text_color: {
         type: String,
-        required: true
+        // required: true
     }
 });
 

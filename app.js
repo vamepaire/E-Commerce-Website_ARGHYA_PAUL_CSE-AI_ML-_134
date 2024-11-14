@@ -22,7 +22,7 @@ app.use(
   expressSession({
     resave: false,
     saveUninitialized: false,
-    secret: `${config.get("SESSION_SECRET")}`,
+    secret: process.env.SESSION_SECRET,
   })
 );
 app.use(flash());

@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const config = require("config");
 async function isLoggedin(req, res, next) {
   try {
     const token = req.cookies.token;
@@ -12,7 +11,7 @@ async function isLoggedin(req, res, next) {
     }
 
     // Verify the token
-    const decoded = jwt.verify(token, `${config.get("JWT_KEY")}`);
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
     req.user = decoded;
 
     next();
