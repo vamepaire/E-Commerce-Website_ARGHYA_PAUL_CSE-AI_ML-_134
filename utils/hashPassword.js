@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 
 async function hashPassword(password) {
   try {
-    const salt = await bcrypt.genSalt(15); // Adjust the salt rounds as needed
+    const salt = await bcrypt.genSalt(15);
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
   } catch (error) {
