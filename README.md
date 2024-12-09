@@ -1,4 +1,3 @@
-# E-Commerce-Website_ARGHYA_PAUL_CSE-AI_ML-_134
 # ShopMate - E-commerce Platform
 
 ShopMate is a full-stack e-commerce web application built using **Node.js**, **Express.js**, **MongoDB**, and **EJS templates**. It features a responsive and user-friendly interface powered by **Tailwind CSS**, providing seamless navigation and interaction.
