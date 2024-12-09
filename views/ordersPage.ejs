@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header -->
+    <header
+      class="shadow-md fixed top-0 w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 z-10"
+    >
+      <div
+        class="bg-green-600 w-full h-14 flex justify-between items-center fixed top-0 left-0 z-10"
+      >
+        <!-- Left Corner: Home Button -->
+        <a href="/shopmate" class="text-white text-xl font-semibold ml-10">
+          Shopmate
+        </a>
+        <!-- Right Corner: Username -->
+        <div class="text-white text-xl font-semibold mr-10">
+          <span> Your Orders </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mt-20 container mx-auto py-6 px-6 mb-20">
+      <% if (orders && orders.length > 0) { %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% orders.forEach(order => { %>
+        <div
+          class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-all duration-300 ease-in-out"
+        >
+          <h2 class="text-lg font-semibold text-gray-800 mb-2">
+            Order ID: <span class="text-gray-600"><%= order._id %></span>
+          </h2>
+          <p class="text-sm text-gray-500">
+            Placed on: <%= new Date(order.createdAt).toLocaleDateString() %>
+          </p>
+          <p class="text-sm text-gray-500">
+            Payment Method: <%= order.paymentMethod %>
+          </p>
+          <p class="text-sm text-gray-500">
+            Total Price: ₹<%= order.totalPrice %>
+          </p>
+
+          <!-- Order Items -->
+          <h4 class="text-md font-semibold text-gray-700 mt-4">Items:</h4>
+          <ul class="divide-y divide-gray-200 mt-2">
+            <% if (order.orderItems && Array.isArray(order.orderItems)) { %> <%
+            order.orderItems.forEach(item => { %>
+            <li class="py-2 flex justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-800">
+                  <%= item.name %>
+                </p>
+                <p class="text-sm text-gray-500">
+                  Quantity: <%= item.quantity %>
+                </p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-800">Price: ₹<%= item.price %></p>
+              </div>
+            </li>
+            <% }) %> <% } else { %>
+            <li class="py-2 text-gray-500">No items found for this order.</li>
+            <% } %>
+          </ul>
+
+          <!-- Shipping Address -->
+          <div class="mt-4">
+            <h4 class="text-md font-semibold text-gray-700">
+              Shipping Address:
+            </h4>
+            <p class="text-sm text-gray-500">
+              <%= order.shippingAddress.address %>, <%=
+              order.shippingAddress.city %>, <%=
+              order.shippingAddress.postalCode %>, <%=
+              order.shippingAddress.country %>
+            </p>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <!-- No Orders -->
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-800">No Orders Found</h2>
+        <p class="text-sm text-gray-500">You have not placed any orders yet.</p>
+      </div>
+      <% } %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 fixed bottom-0 w-full">
+      <div class="container mx-auto text-center">
+        <p class="text-sm">
+          &copy; <%= new Date().getFullYear() %> Your ShopMate. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

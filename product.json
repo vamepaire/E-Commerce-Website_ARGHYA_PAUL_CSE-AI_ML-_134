@@ -1,0 +1,224 @@
+{
+  "products": [
+    {
+      "product_name": "Classic Leather Jacket",
+      "price": 199,
+      "discount": 10,
+      "image": "https://hnscraftsmanship.com/wp-content/uploads/2024/05/CLASSIC-LEATHER-JACKET-003-%E2%80%93-BLACK.jpg",
+      "bgcolor": "#000000",
+      "panel_color": "#FFFFFF",
+      "text_color": "#CCCCCC",
+      "category": "Fashion",
+      "product_desc": "A stylish black leather jacket for all occasions."
+    },
+    {
+      "product_name": "Premium Grocery Pack",
+      "price": 299,
+      "discount": 5,
+      "image": "https://img.freepik.com/premium-photo/one-can-find-festive-grocery-package-home-delivery-providing-nourishing-food-holidays_117038-27712.jpg",
+      "bgcolor": "#FFD700",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Grocery",
+      "product_desc": "A selection of high-quality grocery items for your daily needs."
+    },
+    {
+      "product_name": "4K Ultra HD Smart TV",
+      "price": 49999,
+      "discount": 15,
+      "image": "https://www.smarttech-tv.com/image/cache/catalog/43UV10V1/43UV10V1-700x500.jpg",
+      "bgcolor": "#0000FF",
+      "panel_color": "#F0F0F0",
+      "text_color": "#FFFFFF",
+      "category": "Electronics",
+      "product_desc": "Experience stunning visuals with this 4K Ultra HD Smart TV."
+    },
+    {
+      "product_name": "Modern Sofa Set",
+      "price": 7899,
+      "discount": 25,
+      "image": "https://ezkrt.com/435195-large_default/living-room-furniture-sofa-set-modern-couch-lounge-suite-luxury-sofa-set-design-modern-sofa-living-room-furniture-whitenavy-blue.jpg",
+      "bgcolor": "#A52A2A",
+      "panel_color": "#FFFFFF",
+      "text_color": "#333333",
+      "category": "Home & Furniture",
+      "product_desc": "A luxurious sofa set to elevate your living room."
+    },
+    {
+      "product_name": "Smartphone Pro Max",
+      "price": 119999,
+      "discount": 20,
+      "image": "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-15-pro-max-2.jpg",
+      "bgcolor": "#E0E0E0",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Mobile",
+      "product_desc": "The latest smartphone with advanced features and a sleek design."
+    },
+    {
+      "product_name": "Elegant Evening Dress",
+      "price": 2000,
+      "discount": 15,
+      "image": "https://brownliving.in/cdn/shop/products/happy-lush-round-clutch-wrc1slgg8-womens-bag-brown-living-261703_800x.jpg?v=1682963168",
+      "bgcolor": "#800080",
+      "panel_color": "#FFFFFF",
+      "text_color": "#FFFAFA",
+      "category": "Fashion",
+      "product_desc": "A stunning evening dress perfect for any special occasion."
+    },
+    {
+      "product_name": "Organic Fruit Basket",
+      "price": 297,
+      "discount": 5,
+      "image": "https://img.freepik.com/premium-photo/portrait-organic-fruit-basket-isolated-flat-surface_980928-56336.jpg",
+      "bgcolor": "#32CD32",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Grocery",
+      "product_desc": "A fresh basket of organic fruits for a healthy lifestyle."
+    },
+    {
+      "product_name": "Wireless Bluetooth Headphones",
+      "price": 899,
+      "discount": 10,
+      "image": "https://media.istockphoto.com/id/1373017594/photo/headphones-on-the-orange-color-background.jpg?s=612x612&w=0&k=20&c=9SEBT-6kUjIBy33Ga-C9n6CQMd7FOUk3yC89mOAa0ts=",
+      "bgcolor": "#808080",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Electronics",
+      "product_desc": "Enjoy high-quality sound with these wireless Bluetooth headphones."
+    },
+    {
+      "product_name": "Luxury Coffee Table",
+      "price": 19999,
+      "discount": 20,
+      "image": "https://www.crosby.co.in/wp-content/uploads/2023/12/1000149363.jpg",
+      "bgcolor": "#8B4513",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Home & Furniture",
+      "product_desc": "A luxury coffee table that will enhance the aesthetic of your living space."
+    },
+    {
+      "product_name": "Smart Fitness Watch",
+      "price": 120,
+      "discount": 10,
+      "image": "https://cdn.thewirecutter.com/wp-content/media/2023/11/fitness-tracker-2048px-5344.jpg?auto=webp&quality=75&crop=1.91:1&width=1200",
+      "bgcolor": "#00FF7F",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Mobile",
+      "product_desc": "Track your fitness goals with this stylish smart fitness watch."
+    },
+    {
+      "product_name": "Stylish Sunglasses",
+      "price": 399,
+      "discount": 5,
+      "image": "https://www.shutterstock.com/image-photo/sunglasses-glasses-sale-concept-trendy-260nw-2133622907.jpg",
+      "bgcolor": "#FF6347",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Fashion",
+      "product_desc": "Look chic and stay protected from the sun with these stylish sunglasses."
+    },
+    {
+      "product_name": "Eco-Friendly Shopping Bag",
+      "price": 99,
+      "discount": 0,
+      "image": "https://www.ludlowjute.com/wp-content/uploads/2023/12/Jute_Reusable.jpg",
+      "bgcolor": "#228B22",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Grocery",
+      "product_desc": "An eco-friendly, reusable shopping bag for all your needs."
+    },
+    {
+      "product_name": "Bluetooth Wireless Speaker",
+      "price": 750,
+      "discount": 15,
+      "image": "https://m.media-amazon.com/images/I/61JUEwg23KL.jpg",
+      "bgcolor": "#000000",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Electronics",
+      "product_desc": "Portable and wireless speaker with powerful sound."
+    },
+    {
+      "product_name": "Contemporary Wall Art",
+      "price": 799,
+      "discount": 30,
+      "image": "https://m.media-amazon.com/images/I/7100kW7yRgL._AC_UF1000,1000_QL80_.jpg",
+      "bgcolor": "#8A2BE2",
+      "panel_color": "#FFFFFF",
+      "text_color": "#FFFFFF",
+      "category": "Home & Furniture",
+      "product_desc": "A piece of contemporary wall art to bring life to your home."
+    },
+    {
+      "product_name": "Smartphone X10",
+      "price": 17999,
+      "discount": 10,
+      "image": "https://images.ctfassets.net/wcfotm6rrl7u/3mvlM9k52RnzCGtQcB6CZn/abdc22581e77764ca2b1ee739ace17b3/nokia_X10-og_image.jpg",
+      "bgcolor": "#2F4F4F",
+      "panel_color": "#FFFFFF",
+      "text_color": "#FFFFFF",
+      "category": "Mobile",
+      "product_desc": "The new smartphone with amazing features and high-speed performance."
+    },
+    {
+      "product_name": "Luxury Bed Set",
+      "price": 19999,
+      "discount": 25,
+      "image": "https://www.royalzig.com/uploads/cache/cache-Mumbai-Luxury-Designer-Bedroom-Set-1.jpg",
+      "bgcolor": "#8B0000",
+      "panel_color": "#FFFFFF",
+      "text_color": "#FFFFFF",
+      "category": "Home & Furniture",
+      "product_desc": "A luxury bed set that ensures a comfortable and stylish sleep."
+    },
+    {
+      "product_name": "Stylish Winter Coat",
+      "price": 2500,
+      "discount": 15,
+      "image": "https://oc.kosha.co/journal/wp-content/uploads/2022/07/winter-jacket-for-men.jpeg",
+      "bgcolor": "#8B4513",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Fashion",
+      "product_desc": "Stay warm and fashionable with this stylish winter coat."
+    },
+    {
+      "product_name": "Wireless Earbuds",
+      "price": 1399,
+      "discount": 5,
+      "image": "https://www.bigcmobiles.com/media/catalog/product/cache/e19e56cdd4cf1b4ec073d4305f5db95a/r/e/realme_t110_truly_wireless_earbuds.jpg",
+      "bgcolor": "#4682B4",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Electronics",
+      "product_desc": "Compact wireless earbuds with great sound quality."
+    },
+    {
+      "product_name": "Coffee Machine",
+      "price": 15999,
+      "discount": 20,
+      "image": "https://cothas.com/cdn/shop/files/grande-2_1200x1200.jpg?v=1685277876",
+      "bgcolor": "#D2691E",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Home & Furniture",
+      "product_desc": "Brew your favorite coffee with this high-quality coffee machine."
+    },
+    {
+      "product_name": "Portable Power Bank",
+      "price": 1299,
+      "discount": 10,
+      "image": "https://d57avc95tvxyg.cloudfront.net/images/detailed/2142/15000mah_power_bank_by_maxbhi_2_fast_charge.jpg?t=1511714365",
+      "bgcolor": "#32CD32",
+      "panel_color": "#FFFFFF",
+      "text_color": "#000000",
+      "category": "Mobile",
+      "product_desc": "Keep your devices charged on the go with this portable power bank."
+    }
+  ]
+}

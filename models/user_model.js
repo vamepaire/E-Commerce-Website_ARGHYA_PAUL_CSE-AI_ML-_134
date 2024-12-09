@@ -18,6 +18,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Product_Model",
     },
   ],
+  wishlist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product_Model",
+    },
+  ],
   isAdmin: {
     type: Boolean,
   },
@@ -33,4 +39,4 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-module.exports  = mongoose.model("User_Model", UserSchema);
+module.exports = mongoose.model("User_Model", UserSchema);

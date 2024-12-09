@@ -1,0 +1,197 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopmate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <script src="/javascripts/flash-message.js" defer></script>
+  <script src="/javascripts/slideshow.js" defer></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+  <div class="flex min-h-screen">
+
+    <!-- Left Sidebar -->
+    <aside class="w-1/6 bg-pink-100 p-6 shadow-md flex flex-col justify-between h-screen fixed">
+      <!-- Shopmate title -->
+      <div class="mb-6">
+        <a href="/shopmate">
+          <h1 class="text-3xl font-bold text-blue-800">Shopmate</h1>
+        </a>
+      </div>
+
+      <!-- My Account section with logo -->
+      <div class="mb-6">
+        <h2 class="flex items-center text-xl font-semibold mb-4">
+          <img src="/images/images.png" alt="My Account Logo" class="w-6 h-6 mr-2 rounded-full"> My Account
+        </h2>
+
+        <ul class="space-y-3" id="menu">
+
+          <%if(flag){%>
+          <li id="login">
+            <a href="/loginpage" class="text-gray-700 hover:text-blue-600 flex items-center">
+              <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg" alt="Login Icon" class="w-5 h-5 mr-1" />
+              <strong>Login</strong>
+            </a>
+          </li>
+          <li id="signup">
+            <a href="/registerpage" class="text-gray-700 hover:text-blue-600 flex items-center">
+              <img src="https://uxwing.com/wp-content/themes/uxwing/download/editing-user-action/signup-icon.png" alt="Signup Icon" class="w-5 h-5 mr-1" />
+              <strong>Sign Up</strong>
+            </a>
+          </li>
+         
+        </ul>
+        <%}else {%>
+        <li id="cart"><a href="/cart" class="flex items-center relative text-gray-700 hover:text-blue-600">
+            <%if(cart.length != 0){%>
+            <span class="absolute -top-1 -left-3 inline-flex items-center justify-center w-5 h-5 bg-red-500 text-white text-xs rounded-full">
+              <%= cart.length %>
+            </span>
+            <%}%>
+            <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/header_cart-eed150.svg" alt="Cart Icon" class="w-6 h-6 mr-1" />
+            <strong>Cart</strong>
+          </a></li>
+        <li id="wishlist"><a href="/wishlist" class="flex items-center relative text-gray-700 hover:text-blue-600">
+            <%if(wishlist.length != 0){%>
+            <span class="absolute -top-1 -left-3 inline-flex items-center justify-center w-5 h-5 bg-red-500 text-white text-xs rounded-full">
+              <%= wishlist.length %>
+            </span>
+
+            <%}%>
+          <img src="https://cdn2.iconfinder.com/data/icons/thick-outlines-online-project-basics/128/20-blue_favorite-heart-love-wishlist-512.png" alt="Wishlist Icon" class="w-6 h-6 mr-1" />
+          
+          <strong>Wishlist</strong>
+        </a></li>
+     <li id="orders"><a href="/orders" class="flex items-center relative text-gray-700 hover:text-blue-600">
+      <%if(orders.length != 0){%>
+            <span class="absolute -top-1 -left-3 inline-flex items-center justify-center w-5 h-5 bg-red-500 text-white text-xs rounded-full">
+              <%= orders.length %>
+            </span>
+
+            <%}%>
+          <img src="https://cdn-icons-png.flaticon.com/512/3500/3500833.png" alt="Order Icon" class="w-6 h-6 mr-1" />
+          <strong>Orders</strong>
+        </a></li>
+    <%}%>
+      </div>
+      <div class="border-t-4 border-zinc-400 py-2"></div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Categories</h2>
+        <ul class="space-y-3">
+          <li><a href="/category/Grocery" class="text-gray-700 hover:text-blue-500"><strong>Grocery</strong></a></li>
+          <li><a href="/category/Mobile" class="text-gray-700 hover:text-blue-500"><strong>Mobile</strong></a></li>
+          <li><a href="/category/Fashion" class="text-gray-700 hover:text-blue-500"><strong>Fashion</strong></a></li>
+          <li><a href="/category/Electronics" class="text-gray-700 hover:text-blue-500"><strong>Electronics</strong></a></li>
+          <li><a href="/category/Home & Furniture" class="text-gray-700 hover:text-blue-500"><strong>Home & Furniture</strong></a></li>
+        </ul>
+      </div>
+      <%if(!flag){%>
+      <div class="mt-28">
+        <ul>
+          <li id="logout">
+            <a href="/users/logout" class="bg-red-400 hover:text-white text-l block text-center py-2 px-4 border border-2 border-gray-300 rounded-lg shadow-md font-bold">
+              <strong>Logout</strong>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <%}%>
+     
+      <footer class="mt-auto border-t-2 border-gray-500 pt-3">
+        <p class="text-gray-600 text-sm text-center">© 2024 Shopmate. All rights reserved.</p>
+        <ul class="flex justify-center space-x-4 mt-2">
+          <li><a href="/privacy-policy" class="text-gray-700 hover:text-blue-500 text-sm">Privacy Policy</a></li>
+          <li><a href="/terms" class="text-gray-700 hover:text-blue-500 text-sm">Terms of Service</a></li>
+        </ul>
+      </footer>
+    </aside>
+
+
+
+    <!-- Main Content Area for Product Display -->
+    <main class="w-3/4 ml-[16.666%] py-5 px-3 bg-green-50">
+     <div class="relative py-20 rounded-md overflow-hidden postion-sticky z-10">
+       <div id="slideContainer" class="container mx-auto text-center absolute inset-0 flex transition-transform duration-500 h-full ">
+         <!-- Slide 1 -->
+         <div class="slide w-full h-full  flex flex-col items-center justify-center text-white active">
+           <img src="/images/grocery3.jpg" alt="Welcome to ShopMate" class="h-full w-full object-cover opacity-100" />
+           <div class="absolute inset-0 flex flex-col items-center justify-center text-black">
+             <!-- Overlay for text -->
+             <h1 class="text-4xl font-semibold mb-4">Welcome to ShopMate</h1>
+             <p class="text-xl font-semibold mb-4">Find the best products at unbeatable prices. Shop now and enjoy exclusive offers!</p>
+           </div>
+         </div>
+
+         <!-- Slide 2 -->
+         <div class="slide w-full h-full flex flex-col items-center justify-center text-white">
+           <img src="/images/electronics.jpg" alt="New Arrivals" class="h-full w-full object-cover opacity-100" />
+           <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+             <!-- Overlay for text -->
+             <h1 class="text-4xl font-semibold mb-4">New Arrivals</h1>
+             <p class="text-xl font-semibold mb-4">Explore the latest trends and enjoy great discounts!</p>
+           </div>
+         </div>
+
+         <!-- Slide 3 -->
+         <div class="slide w-full h-full flex flex-col items-center justify-center text-white">
+           <img src="/images/tshirt.jpg" alt="Seasonal Discounts" class="h-full w-full object-cover opacity-100" />
+           <div class="absolute inset-0 flex flex-col items-center justify-center text-black">
+             <!-- Overlay for text -->
+             <h1 class="text-4xl font-semibold mb-4">Seasonal Discounts</h1>
+             <p class="text-xl font-semibold mb-4">Shop your favorites with limited-time seasonal deals!</p>
+           </div>
+         </div>
+       </div>
+     </div>
+
+
+
+
+      <div class="pt-6 ">
+        <div class="border-t-2 border-dotted border-black py-2"></div>
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6">Products</h1>
+
+       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 -gap-4 gap-y-6 ">
+         <% allProduct.forEach(function(product) {%>
+      <div class="relative rounded-lg shadow-sm overflow-hidden flex flex-col items-center h-50  w-48 border border-1 border-black border-dotted ">
+        <div class=" flex bg-[<%= product.bgcolor%>] w-full item-center justify-center transition-transform duration-100 hover:scale-105 ">
+          <img src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="Product Image" class="w-full h-[9rem] " />
+        </div>
+
+        <div class="bg-[<%= product.panel_color %>] w-full p-2 -mt-1 text-[<%= product.text_color%>]">
+          <a href="/products/<%= product._id%>">
+            <h2 class="text-md font-semibold text-gray-800 hover:text-blue-700 line-clamp-1"><%= product.product_name %></h2>
+          </a>
+          <div class="flex items-center justify-between">
+            <p class="text-md ">₹<%= product.price.toFixed(2) %></p>
+
+            <a href="/addtocart/<%= product._id %>">
+              <button type="button" class="flex items-center justify-center w-10 h-10 bg-green-400 text-white rounded-full hover:bg-green-600 -mb-8">
+                <span class="text-3xl font-semibold">+</span>
+              </button>
+            </a>
+
+          </div>
+          <div>
+            <p class="text-md  mb-2">Discount : <%= product.discount || 0 %>%</p>
+          </div>
+
+        </div>
+      </div>
+      <%})%>
+  </div>
+
+  </div>
+  </div>
+  
+  </main>
+  </div>
+  
+
+
+</body>

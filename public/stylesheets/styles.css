@@ -12,3 +12,11 @@
 .slide.active {
   opacity: 1; /* Show the active slide */
 }
+#flash-message {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-out {
+  opacity: 0;
+}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/public/javascripts/setPrice.js"></script>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Navbar -->
+    <div
+      class="bg-green-600 w-full h-14 flex justify-between items-center fixed top-0 left-0 z-10"
+    >
+      <!-- Left Corner: Home Button -->
+      <a href="/shopmate" class="text-white text-xl font-semibold ml-10">
+        Shopmate
+      </a>
+      <!-- Right Corner: Username -->
+      <div class="text-white text-xl font-semibold mr-10">
+        <span> <%= user.User_name %> </span>
+      </div>
+    </div>
+
+    <div class="container mx-auto p-6 mt-14">
+      <!-- Cart Layout -->
+      <div class="flex justify-between w-full ml-20">
+        <!-- Left Section: Items -->
+        <div class="col-span-2 space-y-0 w-1/2">
+          <% cartItems.forEach(function(item, index) { %>
+          <div
+            class="flex items-start bg-white p-4 border-b <%= index === cartItems.length - 1 ? '' : 'border-gray-300' %>"
+          >
+            <!-- Product Image -->
+            <img
+              src="data:image/jpeg;base64,<%= item.image.toString('base64') %>"
+              alt="<%= item.product_name %>"
+              class="w-20 h-20 object-cover rounded-md"
+            />
+
+            <!-- Product Details -->
+            <div class="ml-4 flex-grow">
+              <a href="/products/<%= item._id%>"
+                ><h2 class="text-base font-semibold text-gray-700">
+                  <%= item.product_name %>
+                </h2></a
+              >
+
+              <p class="text-sm text-gray-500">Sold by: ABC Retailer</p>
+              <p class="text-lg font-bold text-gray-800 mt-2">
+                ₹ <%= item.price.toFixed(2) %>
+              </p>
+
+              <!-- Quantity Controls -->
+              <div class="flex items-center space-x-2 mt-2">
+                <button
+                  class="px-2 py-1 border rounded text-gray-700 hover:bg-gray-100"
+                  onclick="updateQuantity('<%= item._id %>', -1, '<%= item.price %>' , '<%= total %>')"
+                >
+                  -
+                </button>
+                <input
+                  id="quantity-<%= item._id %>"
+                  type="number"
+                  class="w-12 text-center border rounded"
+                  value="<%= item.quantity > 0 ? item.quantity : 1 %>"
+                  min="1"
+                  onchange="recalculate('<%= item._id %>', '<%= item.price %>', this.value ,'<%= total %>')"
+                />
+                <button
+                  class="px-2 py-1 border rounded text-gray-700 hover:bg-gray-100"
+                  onclick="updateQuantity('<%= item._id %>', 1, '<%= item.price %>' ,'<%= total %>')"
+                >
+                  +
+                </button>
+                <a href="/removeFromCart/<%= item._id %>"
+                  ><button class="ml-auto text-red-500 hover:underline">
+                    Remove
+                  </button></a
+                >
+              </div>
+            </div>
+
+            <!-- Buy Now Button - Positioned on the Right -->
+            <form
+              action="/checkout/<%= item._id %>"
+              class="ml-4 mt-7 flex items-center justify-center"
+              method="get"
+            >
+              <button
+                class="bg-green-600 text-white font-semibold py-1 px-4 rounded mt-4 transition-shadow-300 hover:shadow-lg transition-color hover:bg-blue-500"
+              >
+                BUY NOW
+              </button>
+            </form>
+          </div>
+          <% }); %> <% if (cartItems.length===0) { %>
+          <div class="text-center mt-12">
+            <h2 class="text-xl font-bold text-gray-700">
+              Your Cart is Empty !
+            </h2>
+            <p class="text-gray-600">
+              Add items to your Cart to see them here!
+            </p>
+            <a
+              href="/shopmate"
+              class="inline-block mt-4 px-6 py-2 bg-green-600 text-white rounded hover:bg-blue-500"
+            >
+              Continue Shopping
+            </a>
+          </div>
+          <% } %>
+        </div>
+
+        <!-- Right Section: Price Details -->
+        <div
+          class="bg-white p-4 border border-gray-300 fixed top-20 right-12 w-1/3 h-auto max-h-screen overflow-y-auto mr-12"
+        >
+          <h2 class="text-lg font-bold mb-2 text-blue-500">Price Details</h2>
+          <p class="border border-b-1 border-solid border-gray"></p>
+          <h2 class="text-md font-semibold mb-2 mt-2">
+            Total Products (<%= cartItems.length %>)
+          </h2>
+          <div class="space-y-2">
+            <div class="flex justify-between text-black">
+              <span>Subtotal</span>
+              <span>₹ <%= total.toFixed(2) %></span>
+            </div>
+            <div class="flex justify-between text-black mt-1 mb-1">
+              <span>Shipping Fee</span>
+              <span>₹ 0.00</span>
+            </div>
+            <div class="flex justify-between text-black mt-1 mb-1">
+              <span>Discount</span>
+              <span>-₹ <%= discount %></span>
+            </div>
+            <div class="flex justify-between text-black mt-1 mb-1">
+              <span>Coupons For You</span>
+              <span>₹ 0.00</span>
+            </div>
+            <div class="flex justify-between text-black mt-1 mb-1">
+              <span>Delivery Charges</span>
+              <div>
+                <span class="line-through text-gray-500">₹110.00</span>
+                <span class="text-green-600 ml-2">₹0.00</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between text-black mt-1 mb-1">
+              <span>Secured Packaging Fee</span>
+              <%if(discountedPirce == 0){%>
+              <span class="text-green-600">₹ 0.00</span>
+              <%}else {%>
+              <span class="text-green-600">₹ 5.00</span>
+              <%}%>
+            </div>
+            <div class="flex justify-between text-black mt-1 mb-1">
+              <span>Protect Promise Fee</span>
+              <%if(discountedPirce == 0){%>
+              <div>
+                <!-- <span class="line-through text-gray-500">0</span> -->
+                <span class="text-green-600 ml-2">0</span>
+              </div>
+              <%}else {%>
+              <div>
+                <span class="line-through text-gray-500">₹90.00</span>
+                <span class="text-green-600 ml-2">₹17.00</span>
+              </div>
+              <%}%>
+            </div>
+
+            <div
+              class="border-t pt-2 flex justify-between text-lg font-bold text-gray-800"
+            >
+              <span>Total</span>
+              <%if(discountedPirce == 0){%>
+              <span id="cart-total"
+                >₹ <%= (discountedPirce + 0).toFixed(2) %></span
+              >
+              <%}else {%>
+              <span id="cart-total"
+                >₹ <%= (discountedPirce + 17).toFixed(2) %></span
+              >
+              <%}%>
+            </div>
+          </div>
+          <a href="/checkout"
+            ><button
+              class="w-full bg-green-600 hover:bg-blue-500 text-white py-2 mt-4 rounded"
+            >
+              Proceed to Checkout
+            </button></a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

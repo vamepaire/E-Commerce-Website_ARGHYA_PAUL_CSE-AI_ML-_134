@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <script src="/javascripts/flash-message.js" defer></script>
+</head>
+
+<body class="bg-gradient-to-r from-purple-800 via-purple-600 to-pink-500 font-sans ">
+  <div class="absolute inset-0 z-0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute top-0 left-0 w-full h-1/2">
+      <path fill="#ffffff" fill-opacity="0.3"
+        d="M0,160L60,144C120,128,240,96,360,112C480,128,600,192,720,202.7C840,213,960,171,1080,144C1200,117,1320,107,1380,96L1440,85L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
+      </path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute bottom-0 left-0 w-full h-1/2">
+      <path fill="#ffffff" fill-opacity="0.5"
+        d="M0,224L60,213.3C120,203,240,181,360,170.7C480,160,600,160,720,181.3C840,203,960,245,1080,245.3C1200,245,1320,203,1380,181.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+      </path>
+    </svg>
+  </div>
+  <div class="max-w-4xl mx-auto py-10 px-5">
+    <!-- Product Detail Section -->
+    <% product.forEach(function(product) { %>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="relative">
+          <img src="/images/product.jpg" alt="Product Image" class="w-full h-96 object-cover">
+        </div>
+
+        <div class="p-6">
+          <h1 class="text-3xl font-bold text-gray-900"><strong>Product Name :</strong><%= product.product_name %></h1>
+          <p class="text-lg font-semibold text-gray-800 mt-4"><strong>Price :</strong><%= product.price %></p>
+          <p class="text-lg font-semibold text-gray-800 mt-4"></p>
+
+          <p class="text-lg font-semibold text-gray-800 mt-4">₹1999.99</p>
+
+          <div class="mt-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Product Description</h2>
+            <p class="text-gray-700">
+              <br><br>
+              Example features include:
+              <ul class="list-disc pl-5 space-y-2">
+                <li>High-quality materials</li>
+                <li>Excellent durability</li>
+                <li>Advanced technology integration</li>
+                <li>Perfect for daily use</li>
+              </ul>
+            </p>
+          </div>
+
+          <div class="mt-6 flex items-center">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</body>
+
+</html>

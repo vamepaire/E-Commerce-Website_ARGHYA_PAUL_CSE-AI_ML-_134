@@ -102,7 +102,7 @@
 
       <div class="pt-6 ">
         <div class="border-t-2 border-dotted border-black py-2"></div>
-        <h1 class="text-2xl font-semibold text-gray-800 mb-6">Products</h1>
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6"><%= category %></h1>
 
        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 -gap-4 gap-y-6 ">
          <% product.forEach(function(product) {%>
@@ -116,7 +116,7 @@
                 <div class="flex items-center justify-between">
                   <p class="text-md ">₹<%= product.price.toFixed(2) %></p>
                   
-                  <a href="/addtocart/<%= product._id %>">
+                  <a href="/addtocart/<%= product._id %>" method>
                     <button type="button" class="flex items-center justify-center w-10 h-10 bg-green-400 text-white rounded-full hover:bg-green-600 -mb-8">
                       <span class="text-3xl font-semibold">+</span>
                     </button>

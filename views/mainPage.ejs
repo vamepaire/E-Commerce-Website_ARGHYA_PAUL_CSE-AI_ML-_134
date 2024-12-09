@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="/stylesheets/tailwind.css" rel="stylesheet">
+  <title>E-Commerce Front Page</title>
+</head>
+
+<body class="bg-gray-100">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-md fixed top-0 w-full z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="/" class="text-2xl font-bold text-blue-600">ShopMate</a>
+
+      <div class="hidden md:flex items-center space-x-6" id="menu">
+        <!-- Customer Login/Sign Up -->
+        <a href="/loginpage" class="text-gray-700 hover:text-blue-600 flex items-center">
+          <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg" alt="Login Icon" class="w-5 h-5 mr-1" />
+          Login
+        </a>
+
+        <a href="/registerpage" class="text-gray-700 hover:text-blue-600">Sign Up</a>
+
+
+        <!-- Cart -->
+        <% if(productData.length > 0) { %>
+        <a href="/cart" class="flex items-center relative text-gray-700 hover:text-blue-600">
+          <span class="absolute -top-1 -left-3 inline-flex items-center justify-center w-5 h-5 bg-red-500 text-white text-xs rounded-full">
+            <%= productData.length %>
+          </span>
+          <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/header_cart-eed150.svg" alt="Cart Icon" class="w-6 h-6 mr-1" />
+          Cart
+        </a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+
+  <section class="mt-16">
+    <div class="bg-gray-900 text-white py-20">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-5xl font-bold mb-6">Welcome to ShopMate</h1>
+        <p class="text-xl mb-6">Find the best products at unbeatable prices. Shop now and enjoy exclusive offers!</p>
+        <a href="/shop" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-md transition duration-300">
+          Start Shopping
+        </a>
+      </div>
+    </div>
+
+    <div class="py-10">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Featured Products</h2>
+    <% if (productData.length > 0) { %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <% productData.forEach(function(product) { %>
+      <div 
+        class="bg-white rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-lg" 
+        style="min-height: 350px; max-height: 380px;">
+        <a href="/read/<%= product._id %>">
+          <img 
+            src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" 
+            alt="Product Image" 
+            class="w-full h-48 object-cover rounded-t-lg" 
+          />
+        </a>
+        <div class="p-4">
+          <a href="/read/<%= product._id %>" class="block">
+            <h3 
+              class="font-bold text-lg text-gray-800 hover:text-blue-500 transition-colors duration-300" 
+              style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-clamp: 2;">
+              <%= product.product_name %>
+            </h3>
+          </a>
+          <p 
+            class="text-gray-600 truncate" 
+            style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;">
+            &#8377;<%= product.price.toFixed(2) %>
+          </p>
+          <a 
+            class="text-blue-600 mt-2 inline-block hover:underline" 
+            href="/read/<%= product._id %>">See More</a>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p class="text-center text-gray-600">No products available at this time.</p>
+    <% } %>
+  </div>
+</div>
+
+    </div>
+
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 ShopMate. All rights reserved.</p>
+      </div>
+    </footer>
+  </section>
+</body>
+
+</html>
