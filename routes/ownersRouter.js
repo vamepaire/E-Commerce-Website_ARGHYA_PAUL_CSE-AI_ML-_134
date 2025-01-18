@@ -12,6 +12,7 @@ const {
 } = require("../controllers/authController");
 const isLoggedin = require("../middlewares/isLoggedin");
 const user_model = require("../models/user_model");
+
 router.get("/logout", isLoggedin, ownerlogOut);
 
 router.post("/create", async (req, res) => {
@@ -47,7 +48,8 @@ router.get("/ownersPage", isLoggedin, async (req, res) => {
     .findOne({ email: req.user.email })
     .populate("product");
   let ownersProduct = owner?.product || [];
-  let user = await user_model.findOne({ email: req.user.email });
+  let user = await ownerModel.findOne({ email: req.user.email });
+  
 
   res.render("ownersViewPage", {
     user: user,

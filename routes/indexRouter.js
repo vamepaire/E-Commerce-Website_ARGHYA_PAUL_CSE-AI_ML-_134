@@ -24,7 +24,7 @@ route.get("/", async (req, res) => {
 });
 route.get("/loginpage", async (req, res) => {
   let message = req.flash("message");
-  res.render("signUpPage", { message: "" });
+  res.render("signUpPage", { message });
 });
 
 route.get("/registerpage", async (req, res) => {
@@ -250,7 +250,10 @@ route.get("/removeFromWishList/:id", isLoggedIn, async function (req, res) {
 
     await user.save();
     res.redirect("/wishlist");
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error removing item:", error);
+    res.status(500).send("Failed to remove item from cart");
+  }
 });
 
 route.get("/checkout/:id", isLoggedIn, async (req, res) => {
@@ -376,75 +379,12 @@ route.post("/deleteFromOrders/:id", isLoggedIn, async function (req, res) {
   }
 });
 
-// route.get("/buyNow/:id", isLoggedIn, async (req, res) => {
-//   try {
-//     res.render("checkOutPage",);
-//   } catch (error) {
-//     console.error("Error buying product:", error);
-//     res.status(500).send({ message: "Error buying product" });
-//   }
-// })
+route.get("/privacy-policy", function (req, res) {
+  res.render("privacyPolicy");
+});
 
-// route.post("/checkout/:id", isLoggedIn, async (req, res) => {
-//   try {
-//     const user = await user_model
-//       .findOne({ email: req.user.email })
-//       .populate("cart");
-
-//     if (!user || !user.cart || user.cart.length === 0) {
-//       req.flash("message", "Your cart is empty. Add items to checkout.");
-//       return res.redirect("/cart");
-//     }
-
-//     const { shippingAddress, paymentMethod } = req.body;
-
-//     if (!shippingAddress || !paymentMethod) {
-//       req.flash(
-//         "message",
-//         "Please provide shipping address and payment method."
-//       );
-//       return res.redirect("/checkout");
-//     }
-
-//     let cartItems = user.cart;
-//     let totalPrice = 0;
-//     let totalDiscount = 0;
-
-//     cartItems.forEach((item) => {
-//       let itemPrice = item.price || 0;
-//       let itemDiscount = (item.discount || 0) / 100;
-//       let discountedPrice = itemPrice - itemPrice * itemDiscount;
-
-//       totalPrice += itemPrice;
-//       totalDiscount += itemPrice * itemDiscount;
-//     });
-
-//     let finalTotal = totalPrice - totalDiscount;
-//     const newOrder = new Order({
-//       user: user._id,
-//       items: cartItems.map((item) => ({
-//         product: item._id,
-//         quantity: 1,
-//         price: item.price,
-//         discount: item.discount,
-//       })),
-//       shippingAddress: shippingAddress,
-//       paymentMethod: paymentMethod,
-//       totalAmount: finalTotal,
-//     });
-
-//     await newOrder.save();
-
-//     // Clear the user's cart
-//     user.cart = [];
-//     await user.save();
-
-//     req.flash("message", "Your order has been placed successfully!");
-//     res.redirect("/orders");
-//   } catch (error) {
-//     console.error("Error during checkout:", error);
-//     res.status(500).send({ message: "Error during checkout" });
-//   }
-// });
+route.get("/terms", function (req, res) {
+  res.render("termsPage");
+});
 
 module.exports = route;

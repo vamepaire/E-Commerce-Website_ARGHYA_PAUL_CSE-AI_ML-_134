@@ -5,14 +5,13 @@ const cookiParser = require("cookie-parser");
 const db = require("./config/mongoose_connect");
 const indexRouter = require("./routes/indexRouter");
 const ownersRouter = require("./routes/ownersRouter");
-const usersRouter = require("./routes/usersRouter");
+const usersRouter = require("./routes/user.routes");
 const productsRouter = require("./routes/productsRouter");
 const config = require("config");
 const flash = require("connect-flash");
 const expressSession = require("express-session");
 const categoriesRouter = require("./routes/categoriesRouter");
 const bodyParser = require("body-parser");
-// const pushRandomdata = require("./middlewares/pushRandomData.js");
 
 require("dotenv").config();
 
