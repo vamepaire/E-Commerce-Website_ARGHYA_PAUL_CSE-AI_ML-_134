@@ -3,15 +3,15 @@ const router = express.Router();
 const {
   userRegistrations,
   userLogin,
-  logOut,
-} = require("../controllers/authController");
+  UserlogOut,
+} = require("../controllers/user.controller");
 const {
   UserRegistrationValidator,
   UserloginValidator,
 } = require("../validator/user.validator");
-const isLoggedin = require("../middlewares/isLoggedin");
+const UserisLoggedin = require("../middlewares/user.isLoggedin");
 
 router.post("/register", UserRegistrationValidator, userRegistrations);
 router.post("/login", UserloginValidator, userLogin);
-router.get("/logout", isLoggedin, logOut);
+router.get("/logout", UserisLoggedin, UserlogOut);
 module.exports = router;

@@ -1,9 +1,9 @@
 const express = require("express");
 const route = express.Router();
-const isLoggedIn = require("../middlewares/isLoggedin");
+const isLoggedIn = require("../middlewares/user.isLoggedin");
 const productModel = require("../models/product_model");
 const user_model = require("../models/user_model");
-const { userLogin } = require("../controllers/authController");
+const { userLogin } = require("../controllers/user.controller");
 const Order = require("../models/orders_model");
 
 route.get("/", async (req, res) => {

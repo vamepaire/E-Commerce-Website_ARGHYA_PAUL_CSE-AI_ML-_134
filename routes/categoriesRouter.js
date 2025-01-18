@@ -3,7 +3,7 @@ const route = express.Router();
 const productsModel = require("../models/product_model");
 const upload = require("../config/multer-config");
 const ownerModel = require("../models/owner_model");
-const isLoggedin = require("../middlewares/isLoggedin");
+const isLoggedin = require("../middlewares/user.isLoggedin");
 const user_model = require("../models/user_model");
 
 route.get("/:category", isLoggedin, async (req, res) => {

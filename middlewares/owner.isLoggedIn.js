@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
-const user_model = require("../models/user_model");
+const owner_model = require("../models/owner_model");
 require("dotenv").config();
 const blackListTokenSchema = require("../models/balckListToken.model");
 
-async function isLoggedin(req, res, next) {
+async function OwnerisLoggedin(req, res, next) {
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
   if (!token)
     return res.status(401).json({
       message: "Unauthenticated User",
@@ -18,13 +19,13 @@ async function isLoggedin(req, res, next) {
       expiresIn: "24h",
     });
 
-    const user = await user_model.findById(decoded.id);
-    if (!user) {
+    const Owner = await owner_model.findById(decoded.id);
+    if (!Owner) {
       return res.status(401).json({
         message: "User Not Found",
       });
     }
-    req.user = user;
+    req.user = Owner;
 
     return next();
   } catch (err) {
@@ -33,4 +34,5 @@ async function isLoggedin(req, res, next) {
     });
   }
 }
-module.exports = isLoggedin;
+
+module.exports = OwnerisLoggedin;

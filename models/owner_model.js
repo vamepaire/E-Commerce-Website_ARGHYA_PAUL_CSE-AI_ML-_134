@@ -1,9 +1,26 @@
+const { selectFields } = require("express-validator/lib/field-selection");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
 const ownerSchema = new mongoose.Schema({
   User_name: {
     type: String,
     required: true,
+  },
+  Shop_name: {
+    type: String,
+    required:true,
+  },
+  address: {
+    street: {
+      type: String,
+      required: true,
+    },
+    pincode: {
+      type: Number,
+      required: true,
+    },
   },
   email: {
     type: String,
@@ -12,6 +29,7 @@ const ownerSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select:false,
   },
   product: [
     {
@@ -24,6 +42,7 @@ const ownerSchema = new mongoose.Schema({
   },
   gstIn: {
     type: String,
+    required: true,
   },
 });
 
