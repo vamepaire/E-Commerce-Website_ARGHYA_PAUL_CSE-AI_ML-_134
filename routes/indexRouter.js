@@ -211,12 +211,10 @@ route.get("/wishlist", isLoggedIn, async (req, res) => {
 });
 
 // Orders Route
-route.get("/orders", async (req, res) => {
+route.get("/orders", isLoggedIn, async (req, res) => {
   try {
     // Fetch orders from the database (you can also filter by user, etc.)
-    const orders = await Order.find({})
-      .populate("user")
-      .populate("orderItems.product");
+    const orders = await Order.find({ user: req.user.id });
     res.render("ordersPage", { orders });
   } catch (error) {
     console.error(error);
@@ -286,9 +284,6 @@ route.post("/place-order", isLoggedIn, async (req, res) => {
     let { orderItems, shippingAddress, paymentMethod, selectedPaymentMethod } =
       req.body;
 
-    console.log("Request Body:", req.body);
-    console.log("User Info:", req.user);
-
     // Parse `orderItems` elements if they are strings
     if (Array.isArray(orderItems)) {
       orderItems = orderItems.map((item) => {
@@ -352,6 +347,32 @@ route.post("/place-order", isLoggedIn, async (req, res) => {
     console.error("Error:", error);
     req.flash("message", "Something went wrong. Please try again.");
     res.status(500).redirect("/checkout");
+  }
+});
+
+route.post("/deleteFromOrders/:id", isLoggedIn, async function (req, res) {
+  try {
+    // Step 1: Delete the order from the Order collection
+    const deletedProduct = await Order.findOneAndDelete({
+      _id: req.params.id,
+    });
+
+    // Step 2: Find the logged-in user
+    const user = await user_model.findById(req.user.id);
+
+    // Step 3: Remove the order ID from the user's orders array
+    user.orders = user.orders.filter(
+      (orderId) => orderId.toString() !== req.params.id
+    );
+
+    // Step 4: Save the updated user document
+    await user.save();
+
+    // Step 5: Redirect to the orders page
+    res.redirect("/orders");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
   }
 });
 

@@ -58,7 +58,7 @@ router.post("/create", isLoggedIn, upload.single("image"), async (req, res) => {
     await owner.save();
 
     // Flash a success message and redirect
-    req.flash("message", "Product created successfully!");
+    req.flash("message");
     res.redirect("/owners/ownersPage");
   } catch (err) {
     console.error("Error creating product:", err);

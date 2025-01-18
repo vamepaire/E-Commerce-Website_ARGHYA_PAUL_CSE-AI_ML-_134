@@ -18,14 +18,15 @@
         <!-- Logo -->
         <div class="text-white text-xl font-bold">Shopmate Business</div>
 
-        <!-- Owner Initials -->
+        <!-- Owner Initials and Logout -->
         <div class="flex items-center justify-center">
           <div
-            class="w-10 h-10 bg-white text-purple-600 font-bold flex justify-center items-center rounded-full shadow-lg ml-10 "
+            class="w-10 h-10 bg-white text-purple-600 font-bold flex justify-center items-center rounded-full shadow-lg ml-10"
           >
-            <%= user.User_name.charAt(0).toUpperCase() %>
+            <!-- Check if user.User_name is available -->
+            <%= user.User_name ? user.User_name.charAt(0).toUpperCase() : '' %>
           </div>
-          <a href="/owners/logout" class="font-bold -mr-8 ml-2">Log Out</a>
+          <a href="/owners/logout" class="font-bold ml-2">Log Out</a>
         </div>
       </div>
     </nav>
@@ -35,7 +36,7 @@
       <!-- Heading -->
 
       <!-- Products Grid -->
-      <%if(ownersProduct.length == 0){%>
+      <% if (ownersProduct.length === 0) { %>
       <div class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-800">Your Products</h1>
         <p class="text-gray-600 mt-2">
@@ -43,11 +44,11 @@
           add your first product.
         </p>
       </div>
-      <%}else {%>
+      <% } else { %>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
       >
-        <% ownersProduct.forEach(function(product) {%>
+        <% ownersProduct.forEach(function (product) { %>
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
             src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
@@ -55,15 +56,17 @@
             class="w-full h-40 object-cover"
           />
           <div class="p-4">
-            <h3 class="font-bold text-lg text-gray-800">
-              <%= product.product_name %>
-            </h3>
-            <p class="text-gray-600 mt-2">Price:₹ <%= product.price %></p>
+            <a href="/owners/<%= product._id %>">
+              <h3 class="font-bold text-lg text-gray-800">
+                <%= product.product_name %>
+              </h3>
+            </a>
+            <p class="text-gray-600 mt-2">Price: ₹<%= product.price %></p>
           </div>
         </div>
-        <%})%>
+        <% }) %>
       </div>
-      <%}%>
+      <% } %>
     </div>
 
     <!-- Fixed "Add Product" Button -->

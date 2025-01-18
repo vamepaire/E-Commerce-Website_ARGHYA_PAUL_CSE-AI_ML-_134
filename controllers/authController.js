@@ -28,7 +28,7 @@ async function userRegistrations(req, res) {
     // Check if user already exists
     let existingUser = await user_model.findOne({ email });
     if (existingUser) {
-      req.flash("message", "User already exists! Try logging in.");
+      req.flash("message", "User Already Exists !");
       return res.redirect("/registerpage");
     }
 
@@ -62,12 +62,12 @@ async function userLogin(req, res) {
     let user = await user_model.findOne({ email: email });
     if (!user) {
       req.flash("message", "Invalid Credentials !");
-      return res.redirect("/");
+      return res.redirect("/registerpage");
     }
     let isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       req.flash("message", "Invalid Credentials !");
-      return res.redirect("/");
+      return res.redirect("/registerpage");
     }
     let token = generateToken(user);
     res.cookie("token", token);
