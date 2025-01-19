@@ -1,5 +1,4 @@
 const user_model = require("../models/user_model");
-const owner_model = require("../models/owner_model");
 const { validationResult } = require("express-validator");
 const UserService = require("../services/user.service");
 const blackListTokenSchema = require("../models/balckListToken.model");
@@ -67,9 +66,9 @@ async function userLogin(req, res) {
 async function UserlogOut(req, res) {
   try {
     const token = req.cookies.token || req.headers.authorization.split(" ")[1];
-    
+
     res.clearCookie("token");
-    
+
     req.session.destroy((err) => {
       if (err) {
         return res.status(500).json({ message: "Failed to destroy session" });
@@ -83,8 +82,6 @@ async function UserlogOut(req, res) {
       .json({ message: "Internal Server Error", error: err.message });
   }
 }
-
-
 
 module.exports = {
   userRegistrations,

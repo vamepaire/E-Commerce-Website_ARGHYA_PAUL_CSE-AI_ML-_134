@@ -19,15 +19,12 @@ const ProductSchema = new mongoose.Schema({
   },
   bgcolor: {
     type: String,
-    // required: true
   },
   panel_color: {
     type: String,
-    // required: true
   },
   text_color: {
     type: String,
-    // required: true
   },
   category: {
     type: String,
@@ -36,6 +33,16 @@ const ProductSchema = new mongoose.Schema({
   },
   product_desc: {
     type: String,
+    required: true,
+  },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  owner_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Owner_Model", // Reference to the Owner_Model
     required: true,
   },
 });

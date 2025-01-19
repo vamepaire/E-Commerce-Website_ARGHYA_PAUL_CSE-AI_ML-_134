@@ -1,4 +1,3 @@
-const { logOut } = require("../controllers/user.controller");
 const Owner_Model = require("../models/owner_model");
 module.exports.CreateOwner = async ({
   User_name,

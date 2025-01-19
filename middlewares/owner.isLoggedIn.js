@@ -25,7 +25,7 @@ async function OwnerisLoggedin(req, res, next) {
         message: "User Not Found",
       });
     }
-    req.user = Owner;
+    req.Owner = Owner;
 
     return next();
   } catch (err) {
