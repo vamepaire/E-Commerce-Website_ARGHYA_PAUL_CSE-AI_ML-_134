@@ -133,14 +133,14 @@ const ReadProduct = async (req, res) => {
     }
 
     const product = await productsModel.findById(product_id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
     if (product_id !== req.Owner.id) {
       return res.status(403).json({
         message:
           "Not Authorized : You Are not Authorized to read the Product..",
       });
-    }
-    if (!product) {
-      return res.status(404).json({ message: "Product not found." });
     }
 
     return res.status(200).json({ product });
