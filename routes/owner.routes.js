@@ -4,27 +4,17 @@ const {
   OwnerRegistrationValidator,
   OwnerLoginValidator,
 } = require("../validator/owner.validator");
-const productValidation = require('../validator/product.validation')
+
 const {
   OwnerRegistration,
   OwnerLogin,
   OwnerlogOut,
 } = require("../controllers/owner.controller");
 const OwnerisLoggedin = require("../middlewares/owner.isLoggedIn");
-const CreateProduct = require('../controllers/product.controller')
-const ProductService = require('../services/product.service')
-
 
 router.post("/register", OwnerRegistrationValidator, OwnerRegistration);
 router.post("/login", OwnerLoginValidator, OwnerLogin);
 router.get("/logout", OwnerisLoggedin, OwnerlogOut);
-router.post(
-  "/createproduct",
-  OwnerisLoggedin,
-  ProductService.AddObjectId,
-  productValidation,
-  CreateProduct
-);
 
 // router.get("/logout", isLoggedin, ownerlogOut);
 // router.get("/admin", isLoggedin, async (req, res) => {

@@ -81,7 +81,7 @@ async function OwnerLogin(req, res) {
     const ownerWithoutPass = Owner.toObject();
     delete ownerWithoutPass.password;
     res.status(200).json({
-      message: "User Logged In Successfully",
+      message: "Owner Logged In Successfully",
       Owner: ownerWithoutPass,
       token,
     });

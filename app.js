@@ -4,15 +4,14 @@ const path = require("path");
 const cookiParser = require("cookie-parser");
 const db = require("./config/mongoose_connect");
 const indexRouter = require("./routes/indexRouter");
-const ownersRouter = require("./routes/owner.routes")
+const ownersRouter = require("./routes/owner.routes");
 const usersRouter = require("./routes/user.routes");
-const productsRouter = require("./routes/productsRouter");
+const productsRouter = require("./routes/products.routes");
 const config = require("config");
 const flash = require("connect-flash");
 const expressSession = require("express-session");
 const categoriesRouter = require("./routes/categoriesRouter");
 const bodyParser = require("body-parser");
-
 
 require("dotenv").config();
 
