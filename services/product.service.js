@@ -13,34 +13,40 @@ module.exports.CreateProduct = async ({
   product_desc,
   owner_id,
 }) => {
-  if (
-    !product_name ||
-    !price ||
-    !discount ||
-    !image ||
-    !bgcolor ||
-    !panel_color ||
-    !text_color ||
-    !category ||
-    !product_desc ||
-    !owner_id
-  ) {
-    throw new Error("All fields are required");
-  }
+  try {
+    if (
+      !product_name ||
+      !price ||
+      !discount ||
+      !image ||
+      !bgcolor ||
+      !panel_color ||
+      !text_color ||
+      !category ||
+      !product_desc ||
+      !owner_id
+    ) {
+      throw new Error("All fields are required");
+    }
 
-  const product = await productsModel.create({
-    product_name,
-    price,
-    image,
-    discount,
-    bgcolor,
-    panel_color,
-    text_color,
-    category,
-    product_desc,
-    owner_id,
-  });
-  return product;
+    const product = await productsModel.create({
+      product_name,
+      price,
+      image,
+      discount,
+      bgcolor,
+      panel_color,
+      text_color,
+      category,
+      product_desc,
+      owner_id,
+    });
+
+    return product;
+  } catch (error) {
+    console.error("Error creating product:", error.message);
+    throw new Error("Error while creating product: " + error.message);
+  }
 };
 
 module.exports.AddObjectId = async (req, res, next) => {

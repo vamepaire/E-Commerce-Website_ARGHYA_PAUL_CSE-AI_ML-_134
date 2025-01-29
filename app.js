@@ -3,14 +3,15 @@ const app = express();
 const path = require("path");
 const cookiParser = require("cookie-parser");
 const db = require("./config/mongoose_connect");
-const indexRouter = require("./routes/indexRouter");
+const indexRouter = require("./routes/index.routes");
 const ownersRouter = require("./routes/owner.routes");
 const usersRouter = require("./routes/user.routes");
 const productsRouter = require("./routes/products.routes");
+const viewcartRouter = require("./routes/viewcart.routes");
 const config = require("config");
 const flash = require("connect-flash");
 const expressSession = require("express-session");
-const categoriesRouter = require("./routes/categoriesRouter");
+const categoriesRouter = require("./routes/category.routes");
 const bodyParser = require("body-parser");
 
 require("dotenv").config();
@@ -36,6 +37,7 @@ app.use("/owners", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/category", categoriesRouter);
+app.use("/viewcart", viewcartRouter);
 
 app.listen(`${config.get("PORT")}`, () => {
   console.log(`App listening on port ${config.get("PORT")}!`);

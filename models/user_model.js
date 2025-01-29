@@ -17,8 +17,15 @@ const UserSchema = new mongoose.Schema({
   },
   cart: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product_Model",
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product_Model",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
   wishlist: [

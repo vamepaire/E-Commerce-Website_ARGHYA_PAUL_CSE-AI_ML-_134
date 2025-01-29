@@ -6,6 +6,12 @@ const mongoose = require("mongoose");
 
 const CreateProduct = async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).send({ message: "No image uploaded" });
+    }
+    const imageBuffer = req.file.buffer;
+    const imageName = req.file.originalname;
+    const imageMimeType = req.file.mimetype;
     const {
       product_name,
       price,
@@ -46,7 +52,11 @@ const CreateProduct = async (req, res) => {
       product_name,
       price,
       discount,
-      image,
+      image: {
+        data: imageBuffer,
+        contentType: imageMimeType,
+        name: imageName,
+      },
       bgcolor,
       panel_color,
       text_color,
@@ -66,24 +76,43 @@ const CreateProduct = async (req, res) => {
 const UpdateProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    const {
+      product_name,
+      price,
+      discount,
+      bgcolor,
+      panel_color,
+      text_color,
+      category,
+      product_desc,
+    } = req.body;
+
+    // Check if an image file is uploaded
+    let imageData = null;
+    if (req.file) {
+      imageData = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+        name: req.file.originalname,
+      };
+    }
 
     if (!id) {
       return res.status(400).json({ message: "Product ID is required." });
     }
-    const product_id = id.toString();
 
-    if (!mongoose.Types.ObjectId.isValid(product_id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid product ID format." });
     }
 
-    const IfThisIsTheOwner = await productsModel.findById(product_id);
+    const existingProduct = await productsModel.findById(id);
 
-    if (!IfThisIsTheOwner) {
+    if (!existingProduct) {
       return res.status(404).json({ message: "Product not found." });
     }
 
     // Verify ownership
-    if (req.Owner.id !== IfThisIsTheOwner.owner_id.toString()) {
+    if (req.Owner.id !== existingProduct.owner_id.toString()) {
       return res.status(403).json({
         message:
           "Unauthorized: You do not have permission to perform this action.",
@@ -96,10 +125,26 @@ const UpdateProduct = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    // Find the product by ID and update its fields
+    // Update product fields
+    const updatedFields = {
+      product_name,
+      price,
+      discount,
+      bgcolor,
+      panel_color,
+      text_color,
+      category,
+      product_desc,
+    };
+
+    // Include image data if a new image is uploaded
+    if (imageData) {
+      updatedFields.image = imageData;
+    }
+
     const updatedProduct = await productsModel.findByIdAndUpdate(
-      product_id,
-      req.body,
+      id,
+      { $set: updatedFields },
       { new: true, runValidators: true } // Return updated document and run schema validators
     );
 
@@ -115,14 +160,13 @@ const UpdateProduct = async (req, res) => {
     console.error(err);
     return res
       .status(500)
-      .json({ message: "Internal Server Error", error: err });
+      .json({ message: "Internal Server Error", error: err.message });
   }
 };
 
 const ReadProduct = async (req, res) => {
   try {
     const { id } = req.params;
-
     if (!id) {
       return res.status(400).json({ message: "Product ID is required." });
     }
@@ -136,14 +180,15 @@ const ReadProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found." });
     }
-    if (product_id !== req.Owner.id) {
+
+    if (product.owner_id.toString() !== req.Owner.id) {
       return res.status(403).json({
         message:
           "Not Authorized : You Are not Authorized to read the Product..",
       });
     }
 
-    return res.status(200).json({ product });
+    return res.status(200).json({ Message: "Your Product Data:", product });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error" });
