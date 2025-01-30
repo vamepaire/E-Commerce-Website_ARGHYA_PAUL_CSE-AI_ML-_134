@@ -13,6 +13,7 @@ const flash = require("connect-flash");
 const expressSession = require("express-session");
 const categoriesRouter = require("./routes/category.routes");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 
 require("dotenv").config();
 
@@ -31,12 +32,14 @@ app.use(
   })
 );
 app.use(flash());
+app.use(morgan("dev"));
 
 app.use("/", indexRouter);
 app.use("/owners", ownersRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/category", categoriesRouter);
+app.use("/find", productsRouter);
 app.use("/viewcart", viewcartRouter);
 
 app.listen(`${config.get("PORT")}`, () => {

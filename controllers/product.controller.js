@@ -228,4 +228,28 @@ const DeleteProduct = async (req, res) => {
     });
   }
 };
-module.exports = { CreateProduct, UpdateProduct, ReadProduct, DeleteProduct };
+async function findProduct(req, res) {
+  try {
+    const character = req.params.character;
+    if (!character) {
+      return res.status(400).json({ message: "Character is required." });
+    }
+
+    const regexp = new RegExp(`${character}`, "i");
+    const products = await productsModel.find({ product_name: regexp });
+    res.status(200).json({
+      message: "Related Products Found",
+      products: Object.keys(products).length,
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Error fetching products" });
+  }
+}
+module.exports = {
+  CreateProduct,
+  UpdateProduct,
+  ReadProduct,
+  DeleteProduct,
+  findProduct,
+};

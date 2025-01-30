@@ -5,32 +5,16 @@ const productModel = require("../models/product_model");
 const user_model = require("../models/user_model");
 const { userLogin } = require("../controllers/user.controller");
 const Order = require("../models/orders_model");
-const UserisLoggedIn = require('../middlewares/user.isLoggedin')
+const UserisLoggedIn = require("../middlewares/user.isLoggedin");
+const { filterProduct } = require("../controllers/index.controller");
 
 route.get("/", UserisLoggedIn, async (req, res) => {
   if (req.user) {
-    // const email = req.user.email;
-    // const 
+    res.status(400).json({ message: "Unauthorized Login Attempt" });
   }
-  // if (req.cookies.token) {
-  //   res.redirect("/shopmate");
-  // } else {
-  //   let message = req.flash("message");
-  //   const allProduct = await productModel.find().limit(21);
-  //   res.render("shopmatePage", {
-  //     cart: [],
-  //     orders: [],
-  //     wishlist: [],
-  //     allProduct: allProduct,
-  //     message: message,
-  //     flag: true,
-  //   });
-  // }
 });
-route.get("/loginpage", async (req, res) => {
-  let message = req.flash("message");
-  res.render("signUpPage", { message });
-});
+
+route.get("/filter", UserisLoggedIn, filterProduct);
 
 route.get("/registerpage", async (req, res) => {
   let message = req.flash("message");

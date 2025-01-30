@@ -17,6 +17,8 @@ const {
   validate,
 } = require("../validator/product.validation");
 const OwnerisLoggedin = require("../middlewares/owner.isLoggedIn");
+const UserisLoggedIn = require("../middlewares/user.isLoggedin");
+const { findProduct } = require("../controllers/product.controller");
 
 router.post(
   "/create-product",
@@ -41,6 +43,7 @@ router.put(
 );
 router.get("/product-description/:id", OwnerisLoggedin, ReadProduct);
 router.delete("/delete-product/:id", OwnerisLoggedin, DeleteProduct);
+router.get("/:character", UserisLoggedIn, findProduct);
 
 // router.get("/:id", isLoggedIn, async function (req, res) {
 //   try {
