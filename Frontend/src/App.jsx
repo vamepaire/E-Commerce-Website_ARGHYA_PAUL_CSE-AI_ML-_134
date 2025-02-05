@@ -1,8 +1,9 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import NavBar from "./components/NavBar";
+import Home from "./components/Header/Home";
+import NavBar from "./components/Header/NavBar";
 import Footer from "./components/Footer/Footer";
+import Testfront from "./components/Header/Testfront"
 
 function App() {
   return (
