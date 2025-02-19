@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiWatch } from "react-icons/fi";
 import ProductCard from "../ProductCard";
@@ -16,6 +16,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
+import { getCustomHeader } from "../customization/Home.custom";
 
 const FrontPage = () => {
   const product = {
@@ -27,12 +28,12 @@ const FrontPage = () => {
   };
 
   const productCategories = {
-    newArrivals: Array(10).fill({ ...product, name: "New Arrival Product" }),
-    bestSellers: Array(10).fill({ ...product, name: "Best Seller Product" }),
-    featuredProducts: Array(10).fill({ ...product, name: "Featured Product" }),
+    New_Arrivals: Array(10).fill({ ...product, name: "New Arrival Product" }),
+    Best_Sellers: Array(10).fill({ ...product, name: "Best Seller Product" }),
+    Featured_Products: Array(10).fill({ ...product, name: "Featured Product" }),
   };
 
-  const [activeCategory, setActiveCategory] = useState("newArrivals");
+  const [activeCategory, setActiveCategory] = useState("New_Arrivals");
 
   const categories = [
     { name: "Phone", icon: <FaPhone /> },
@@ -68,11 +69,25 @@ const FrontPage = () => {
     (currentPage + 1) * categoriesPerPage
   );
 
+  const [textColor, setTextColor] = useState();
+  const [Image, setImage] = useState(null);
+  useEffect(() => {
+    const { color, backgroundImage } = getCustomHeader();
+    setTextColor(color);
+    setImage(backgroundImage);
+  }, [getCustomHeader()]);
+
   return (
     <div className="bg-gray-100 font-sans">
-      <header className="bg-gradient-to-b from-orange-300 via-white to-green-300 text-blue-950 text-center py-20">
+      <header
+        className={` text-center py-20 bg-cover bg-center`}
+        style={{
+          backgroundImage: `url('${Image}')`,
+          color: `${textColor}`,
+        }}
+      >
         <h1 className="text-4xl font-bold mb-4">Discover Amazing Products</h1>
-        <p className="text-lg">
+        <p className="text-xl">
           Shop the latest trends with unbeatable prices.
         </p>
         <Link
@@ -102,7 +117,7 @@ const FrontPage = () => {
             >
               <Link to="#" className="block p-4">
                 <div className="flex flex-col justify-center items-center">
-                  <div className="text-3xl mb-2 text-blue-600">
+                  <div className="text-3xl mb-2 text-red-600">
                     {category.icon}
                   </div>
                   <h3 className="text-black text-sm font-medium">
@@ -125,7 +140,7 @@ const FrontPage = () => {
       {/* Product Category Navigation */}
       <section className="py-6">
         <div className="flex justify-center gap-6 mb-5">
-          {["newArrivals", "bestSellers", "featuredProducts"].map(
+          {["New_Arrivals", "Best_Sellers", "Featured_Products"].map(
             (category) => (
               <button
                 key={category}

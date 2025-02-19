@@ -9,11 +9,13 @@ async function userRegistrations(req, res) {
     if (!err.isEmpty()) {
       return res.status(400).json({ errors: err.array() });
     }
+
     let { User_name, email, password } = req.body;
 
     let existingUser = await user_model.findOne({ email });
+
     if (existingUser) {
-      return res.status(401).json({ message: "User Already Exists" });
+      return res.status(409).json({ message: "User Already Exists" });
     }
     const hashedPassword = await user_model.generatePassword(password);
 
@@ -26,6 +28,7 @@ async function userRegistrations(req, res) {
     const token = await user.generateToken();
     const UserWithoutPass = user.toObject();
     delete UserWithoutPass.password;
+
     return res.status(200).json({
       message: "User Created Successfully",
       user: UserWithoutPass,
@@ -38,12 +41,16 @@ async function userRegistrations(req, res) {
 
 async function userLogin(req, res) {
   try {
+    // console.log(req.body);
+
     const err = await validationResult(req);
     if (!err.isEmpty()) {
       return res.status(400).json({ errors: err.array() });
     }
     let { email, password } = req.body;
     let user = await user_model.findOne({ email: email }).select("+password");
+    console.log(user);
+
     if (!user) {
       return res.status(404).json({ message: "Invalid Login" });
     }

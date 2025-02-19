@@ -14,6 +14,7 @@ const expressSession = require("express-session");
 const categoriesRouter = require("./routes/category.routes");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -33,6 +34,12 @@ app.use(
 );
 app.use(flash());
 app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from this origin
+    credentials: true,
+  })
+);
 
 app.use("/", indexRouter);
 app.use("/owners", ownersRouter);
