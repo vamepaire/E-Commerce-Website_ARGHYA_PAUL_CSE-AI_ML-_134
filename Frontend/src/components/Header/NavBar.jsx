@@ -228,7 +228,7 @@ const NavBar = () => {
       </nav>
       <div className="bg-gray-800 hidden lg:block pt-18">
         <div className="container mx-auto">
-          <div className="flex justify-center space-x-8 py-2 items-center">
+          <div className="flex justify-center gap-4 py-2 items-center">
             {categories.map((category) => (
               <Link
                 key={category.label}

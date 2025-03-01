@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../Features/user/userActions";
 import { UserRegistrationValidator } from "../../validator/user.validator";
-import { Notification } from "../Hooks/custom.notification";
+import { Notification } from "../Hooks/custom.components";
 
 const initialValues = {
   firstname: "",
@@ -71,7 +71,7 @@ const UserRegistration = () => {
         )}
       </div>
 
-      <div className="flex justify-center p-[6rem]">
+      <div className="flex justify-center p-[6rem] min-h-screen">
         <div className="w-full max-w-md p-2 rounded-lg">
           <form onSubmit={formik.handleSubmit}>
             <h1 className="text-center text-2xl font-bold mb-4">

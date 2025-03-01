@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { FaShopify } from "react-icons/fa";
 import ownerValidator from "../../validator/owner.validator.js";
+import { SellerRegProgress } from "../Hooks/custom.components.jsx";
+import { Notification } from "../Hooks/custom.components.jsx";
+import { registerOwner } from "../../Features/Seller/sellerActions.js";
 
 const initialValues = {
   User_name: "",
@@ -19,14 +23,18 @@ const initialValues = {
 const SellerRegister = () => {
   const [step, setStep] = useState(1);
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch();
+  const { loading, error, success } = useSelector((state) => state.authOwner);
 
   const formik = useFormik({
     initialValues,
     validationSchema: ownerValidator,
     onSubmit: (values, { resetForm }) => {
       console.log("Final Form Submitted:", values);
-      resetForm();
+      dispatch(registerOwner(values)).then(() => resetForm());
+
       setStep(1);
+
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -40,18 +48,17 @@ const SellerRegister = () => {
     if (step === 1) {
       errors = await formik.validateForm({
         User_name: formik.values.User_name,
-        Shop_name: formik.values.Shop_name,
         email: formik.values.email,
         password: formik.values.password,
       });
     } else if (step === 2) {
       errors = await formik.validateForm({
         address: formik.values.address,
-        gstIn: formik.values.gstIn,
       });
     } else if (step === 3) {
       errors = await formik.validateForm({
-        image: formik.values.image,
+        Shop_name: formik.values.Shop_name,
+        gstIn: formik.values.gstIn,
       });
     }
 
@@ -63,66 +70,30 @@ const SellerRegister = () => {
   };
 
   return (
-    <div className="flex justify-center p-[4rem]">
-      <div className="w-full max-w-lg p-6 bg-white">
+    <div className="flex  flex-col items-center min-h-screen">
+      <div className="fixed left-1/2 transform -translate-x-1/2 z-50 mt-[0.5rem] w-1/2 ">
+        {(error || success) && (
+          <div
+            className={`px-10 text-lg font-bold rounded-md shadow-lg transition-transform duration-300 ${
+              error
+                ? "bg-red-100/80 text-red-600 border-red-500"
+                : "bg-green-100 text-green-600 border-green-500"
+            }`}
+          >
+            <Notification
+              title={error ? "Warning" : "Success"}
+              message={error || success}
+            />
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col items-center mt-[2rem] mb-[3rem]">
+        <FaShopify className="w-10 h-10 mb-2" />
+        <h1 className="text-3xl font-bold">Become A Seller</h1>
+      </div>
+      <SellerRegProgress steps={step - 1} />
+      <div className="w-full max-w-lg p-6 bg-white mt-[4rem] rounded-lg shadow-lg">
         <form onSubmit={formik.handleSubmit}>
-          <div className="flex flex-col items-center mb-6">
-            <FaShopify className="w-10 h-10 mb-2" />
-            <h1 className="text-3xl font-bold">Become A Seller</h1>
-          </div>
-
-          {/* Steps UI */}
-          <div className="flex items-center mb-6 w-full ml-[3.5rem]">
-            {/* Step 1 */}
-            <div className="flex items-center w-1/3 justify-center">
-              <div
-                className={`w-9 h-9 rounded-full flex items-center font-bold justify-center ${
-                  step >= 1
-                    ? "bg-green-600 text-white"
-                    : "bg-gray-300 text-gray-400"
-                }`}
-              >
-                1
-              </div>
-              <div
-                className={`h-1 flex-grow mx-2 ${
-                  step > 1 ? "bg-green-600" : "bg-red-600"
-                }`}
-              ></div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="flex items-center w-1/3 justify-center">
-              <div
-                className={`w-9 h-9 rounded-full flex font-bold items-center justify-center ${
-                  step >= 2
-                    ? "bg-green-600 text-white"
-                    : "bg-gray-300 text-gray-600"
-                }`}
-              >
-                2
-              </div>
-              <div
-                className={`h-1 flex-grow mx-2 ${
-                  step > 2 ? "bg-green-600" : "bg-red-600"
-                }`}
-              ></div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex items-center w-1/3 ">
-              <div
-                className={`w-9 h-9 rounded-full flex font-bold items-center justify-center ${
-                  step >= 3
-                    ? "bg-green-600 text-white"
-                    : "bg-gray-300 text-gray-600"
-                }`}
-              >
-                3
-              </div>
-            </div>
-          </div>
-
           <div className="space-y-4">
             {step === 1 && (
               <>
@@ -145,24 +116,7 @@ const SellerRegister = () => {
                     </div>
                   )}
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold mb-1">
-                    Shop Name
-                  </label>
-                  <input
-                    name="Shop_name"
-                    type="text"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Shop_name}
-                    className="w-full border px-4 py-2 rounded"
-                  />
-                  {formik.touched.Shop_name && formik.errors.Shop_name && (
-                    <div className="text-red-500 text-sm mt-1">
-                      {formik.errors.Shop_name}
-                    </div>
-                  )}
-                </div>
+
                 <div>
                   <label className="block text-sm font-semibold mb-1">
                     Email
@@ -201,10 +155,8 @@ const SellerRegister = () => {
                 </div>
               </>
             )}
-
-            {step === 2 && (
+            {step == 2 && (
               <>
-                {/* Step 2: Address and GST Number */}
                 <div>
                   <label className="block text-sm font-semibold mb-1">
                     Street
@@ -243,6 +195,31 @@ const SellerRegister = () => {
                       </div>
                     )}
                 </div>
+              </>
+            )}
+
+            {step === 3 && (
+              <>
+                {/* Step 2: Address and GST Number */}
+                <div>
+                  <label className="block text-sm font-semibold mb-1">
+                    Shop Name
+                  </label>
+                  <input
+                    name="Shop_name"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.Shop_name}
+                    className="w-full border px-4 py-2 rounded"
+                  />
+                  {formik.touched.Shop_name && formik.errors.Shop_name && (
+                    <div className="text-red-500 text-sm mt-1">
+                      {formik.errors.Shop_name}
+                    </div>
+                  )}
+                </div>
+
                 <div>
                   <label className="block text-sm font-semibold mb-1">
                     GST Number
@@ -258,35 +235,6 @@ const SellerRegister = () => {
                   {formik.touched.gstIn && formik.errors.gstIn && (
                     <div className="text-red-500 text-sm mt-1">
                       {formik.errors.gstIn}
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-
-            {step === 3 && (
-              <>
-                {/* Step 3: Image Upload */}
-                <div>
-                  <label className="block text-sm font-semibold mb-1">
-                    Upload Image
-                  </label>
-                  <input
-                    type="file"
-                    name="image"
-                    ref={fileInputRef}
-                    onChange={(event) =>
-                      formik.setFieldValue(
-                        "image",
-                        event.currentTarget.files[0]
-                      )
-                    }
-                    onBlur={formik.handleBlur}
-                    className="w-full border px-4 py-2 rounded"
-                  />
-                  {formik.touched.image && formik.errors.image && (
-                    <div className="text-red-500 text-sm mt-1">
-                      {formik.errors.image}
                     </div>
                   )}
                 </div>

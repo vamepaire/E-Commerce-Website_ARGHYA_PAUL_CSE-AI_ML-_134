@@ -42,9 +42,9 @@ export const loginUser = (credentials) => async (dispatch) => {
 
     dispatch(loginFailure(error.response?.data?.errors || "Login failed"));
   }
-  setTimeout(() => {
-    dispatch(clearPopUp());
-  }, 2000);
+  // setTimeout(() => {
+  //   dispatch(clearPopUp());
+  // }, 2000);
 };
 
 export const logoutUser = () => async (dispatch) => {

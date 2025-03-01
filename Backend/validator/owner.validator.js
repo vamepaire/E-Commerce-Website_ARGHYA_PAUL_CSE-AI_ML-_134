@@ -1,5 +1,6 @@
 const { body } = require("express-validator");
 
+
 module.exports.OwnerRegistrationValidator = [
   // Validate User_name
   body("User_name")

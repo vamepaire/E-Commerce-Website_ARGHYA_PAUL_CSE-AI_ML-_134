@@ -5,7 +5,8 @@ const ownerValidator = yup.object({
     .string()
     .min(3, "User name must be at least 3 characters long")
     .max(50, "User name cannot exceed 50 characters")
-    .required("User name is required"),
+    .required("User name is required")
+    .matches(/^\S*$/, "No spaces are allowed in the user name"),
 
   Shop_name: yup
     .string()
@@ -41,22 +42,10 @@ const ownerValidator = yup.object({
     .array()
     .of(yup.string().matches(/^[0-9a-fA-F]{24}$/, "Invalid product ID")),
 
-  image: yup
-    .mixed()
-    .test("fileSize", "File size too large (max 5MB)", (file) => {
-      if (!file) return true; // Skip validation if no file is uploaded
-      return file.size <= 5 * 1024 * 1024; // 5MB in bytes
-    })
-    .test("fileType", "Invalid file type (must be jpg, jpeg, png)", (file) => {
-      if (!file) return true; // Skip validation if no file is uploaded
-      return ["image/jpeg", "image/png", "image/jpg"].includes(file.type); // Check MIME type
-    }),
   gstIn: yup
     .string()
-    .matches(
-      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
-      "Invalid GSTIN format"
-    )
+    .min(8, "GSTIN must be exactly 8 characters")
+    .max(8, "GSTIN must be exactly 8 characters")
     .required("GSTIN is required"),
 });
 

@@ -15,6 +15,7 @@ const categoriesRouter = require("./routes/category.routes");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
+const helmet = require("helmet");
 
 require("dotenv").config();
 
@@ -40,6 +41,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(helmet());
 
 app.use("/", indexRouter);
 app.use("/owners", ownersRouter);

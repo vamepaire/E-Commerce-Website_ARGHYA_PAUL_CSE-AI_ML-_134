@@ -11,6 +11,8 @@ const ownerSchema = new mongoose.Schema({
   Shop_name: {
     type: String,
     required: true,
+    unique: true,
+    index: true,
   },
   address: {
     street: {
@@ -25,6 +27,8 @@ const ownerSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
+    index: true,
   },
   password: {
     type: String,
@@ -43,6 +47,8 @@ const ownerSchema = new mongoose.Schema({
   gstIn: {
     type: String,
     required: true,
+    unique: true,
+    index: true,
   },
 });
 
@@ -52,7 +58,7 @@ ownerSchema.methods.generateToken = async function () {
 };
 
 ownerSchema.statics.generatePassword = async function (password) {
-  const salt = await bcrypt.genSalt(15);
+  const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 };

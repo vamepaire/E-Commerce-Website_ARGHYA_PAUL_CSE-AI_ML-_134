@@ -55,7 +55,7 @@ UserSchema.methods.generateToken = async function () {
 };
 
 UserSchema.statics.generatePassword = async function (password) {
-  const salt = await bcrypt.genSalt(15);
+  const salt = await bcrypt.genSalt(8);
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 };

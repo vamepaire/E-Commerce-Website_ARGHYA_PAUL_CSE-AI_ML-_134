@@ -42,24 +42,39 @@ async function userRegistrations(req, res) {
 async function userLogin(req, res) {
   try {
     // console.log(req.body);
+    const start = Date.now();
 
     const err = await validationResult(req);
     if (!err.isEmpty()) {
       return res.status(400).json({ errors: err.array() });
     }
+    console.log(`Validation completed in ${Date.now() - start}ms`);
     let { email, password } = req.body;
+    const existingUserStart = Date.now();
     let user = await user_model.findOne({ email: email }).select("+password");
-    console.log(user);
 
     if (!user) {
       return res.status(404).json({ message: "Invalid Login" });
     }
+    console.log(
+      ` User checking completed in ${Date.now() - existingUserStart}ms`
+    );
 
+    const passwordMatchingTime = Date.now();
     const isMatch = await user.verifyPassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
+    console.log(
+      ` Verify of Password completed in ${Date.now() - passwordMatchingTime}ms`
+    );
+    const generateTokenTime = Date.now();
+
     const token = await user.generateToken();
+    console.log(
+      `Token Generation completed in ${Date.now() - generateTokenTime}ms`
+    );
+    passwordMatchingTime;
     res.cookie("token", token);
     req.session.user = user;
     res
@@ -73,7 +88,6 @@ async function userLogin(req, res) {
 async function UserlogOut(req, res) {
   try {
     const token = req.cookies.token || req.headers.authorization.split(" ")[1];
-
     res.clearCookie("token");
 
     req.session.destroy((err) => {

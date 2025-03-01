@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { LoginValidator } from "../../validator/user.validator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Features/user/userActions";
+import { Notification } from "../Hooks/custom.components";
 
 const UserLogin = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.authUser);
+  const { error, loading, success, token } = useSelector(
+    (state) => state.authUser
+  );
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -22,15 +25,48 @@ const UserLogin = () => {
         .catch((error) => {
           console.error("Login failed:", error);
         });
-      console.log(values);
-      
     },
   });
 
+  //I have to work on if the user is logged in then i should redirect to the main page
+
+  // const LoggedInUserPage = () => {
+  //   return (
+  //     <div>
+  //       <h1>Welcome Back!</h1>
+  //       <p>You are now logged in.</p>
+  //       <button>Logout</button>
+  //     </div>
+  //   );
+  // };
+
+  // useEffect(() => {
+  //   console.log(token);
+
+  //   <LoggedInUserPage />;
+  // }, [token]);
+
   return (
-    <div className="flex mt-[5rem] justify-center h-screen">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg ">
-        <form className="space-y-6 p-6" onSubmit={formik.handleSubmit}>
+    <div className="flex justify-center">
+      <div className="w-full max-w-lg p-6 bg-white">
+        {(error || success) && (
+          <div
+            className={`px-10 text-lg font-bold rounded-md shadow-lg transition-transform duration-300 ${
+              error
+                ? "bg-red-100/80 text-red-600 border-red-500"
+                : "bg-green-100 text-green-600 border-green-500"
+            }`}
+          >
+            <Notification
+              title={error ? "Warning" : "Success"}
+              message={error || success}
+            />
+          </div>
+        )}
+        <form
+          className="space-y-6 p-6 min-h-screen"
+          onSubmit={formik.handleSubmit}
+        >
           <h1 className="text-center text-2xl font-bold">Login As A User</h1>
           <div>
             <input
@@ -66,10 +102,23 @@ const UserLogin = () => {
 
           <button
             type="submit"
+            disabled={loading}
+            className={`w-full py-2 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 ${
+              loading
+                ? "bg-gradient-to-r from-green-200 to-green-700"
+                : "bg-black hover:bg-gray-800"
+            }`}
+          >
+            {loading ? "Wait..." : "Login"}
+          </button>
+          {/* <button
+            type="submit"
+            disabled={loading}
             className="w-full py-2 text-white bg-black rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 flex justify-center items-center"
           >
+            {loading ? "" : ""}
             Login
-          </button>
+          </button> */}
 
           <p className="text-center">
             Don't have an Account?{" "}

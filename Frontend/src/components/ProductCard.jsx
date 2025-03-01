@@ -1,7 +1,7 @@
 import React from "react";
 import { FaStar, FaRegStar, FaShoppingCart } from "react-icons/fa";
 
-const ProductCard = ({ product }) => {
+export const ProductCard = ({ product }) => {
   const { id, name, price, image, rating } = product;
 
   const renderStars = (rating) => {
@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className=" h-75 w-56  rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ml-10 ">
+    <div className=" h-79 w-72  rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white ">
       <div className="relative h-48 overflow-hidden ">
         <img
           src={image}
@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
 
         <div className="flex items-center mb-2">
           <div className="flex space-x-1">{renderStars(rating)}</div>
-          <span className="text-sm text-gray-500 ml-2">({rating}.0)</span>
+          <span className="text-sm text-gray-500 ml-2">({rating})</span>
         </div>
 
         <p className="text-xl font-bold text-gray-800 mb-4">${price}</p>

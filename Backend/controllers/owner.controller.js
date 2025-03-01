@@ -5,35 +5,53 @@ const blackListTokenSchema = require("../models/balckListToken.model");
 
 async function OwnerRegistration(req, res) {
   try {
+    const start = Date.now();
+
+    // Validate request
     const err = validationResult(req);
     if (!err.isEmpty()) {
+      console.log(err.array());
       return res.status(400).json({ errors: err.array(), message: "Arghya" });
     }
+
+    console.log(`Validation completed in ${Date.now() - start}ms`);
+
     const { User_name, Shop_name, email, password, address, gstIn } = req.body;
 
-    const existingOwner = await Owner_model.findOne({ email });
-    const existingGstIn = await Owner_model.findOne({ gstIn });
-    const existingShop = await Owner_model.findOne({ Shop_name });
+    // Check for existing owner
+    const existingOwnerStart = Date.now();
+    const existingOwner = await Owner_model.findOne({
+      $or: [{ email }, { gstIn }, { Shop_name }],
+    });
+    console.log(
+      `Existing owner check completed in ${Date.now() - existingOwnerStart}ms`
+    );
 
     if (existingOwner) {
-      return res
-        .status(400)
-        .json({ message: "Owner with this email already exists!" });
+      if (existingOwner.email === email) {
+        return res
+          .status(400)
+          .json({ message: "Owner with this email already exists!" });
+      }
+      if (existingOwner.gstIn === gstIn) {
+        return res
+          .status(400)
+          .json({ message: "Owner with this GSTIN already exists!" });
+      }
+      if (existingOwner.Shop_name === Shop_name) {
+        return res
+          .status(400)
+          .json({ message: "Owner with this Shop Name already exists!" });
+      }
     }
 
-    if (existingGstIn) {
-      return res
-        .status(400)
-        .json({ message: "Owner with this GSTIN already exists!" });
-    }
-
-    if (existingShop) {
-      return res
-        .status(400)
-        .json({ message: "Owner with this Shop Name already exists!" });
-    }
-
+    // Hash password
+    const hashStart = Date.now();
     const hashedPassword = await Owner_model.generatePassword(password);
+    console.log(`Password hashing completed in ${Date.now() - hashStart}ms`);
+
+    // Create owner
+    const createOwnerStart = Date.now();
     const Owner = await OwnerService.CreateOwner({
       User_name,
       Shop_name,
@@ -42,8 +60,16 @@ async function OwnerRegistration(req, res) {
       address,
       gstIn,
     });
+    console.log(
+      `Owner creation completed in ${Date.now() - createOwnerStart}ms`
+    );
 
+    // Generate token
+    const tokenStart = Date.now();
     const token = await Owner.generateToken();
+    console.log(`Token generation completed in ${Date.now() - tokenStart}ms`);
+
+    // Remove password from response
     const ownerWithoutPass = Owner.toObject();
     delete ownerWithoutPass.password;
 
@@ -52,6 +78,8 @@ async function OwnerRegistration(req, res) {
       owner: ownerWithoutPass,
       token,
     });
+
+    console.log(`Total request time: ${Date.now() - start}ms`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });

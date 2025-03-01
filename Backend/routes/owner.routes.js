@@ -11,6 +11,18 @@ const {
   OwnerlogOut,
 } = require("../controllers/owner.controller");
 const OwnerisLoggedin = require("../middlewares/owner.isLoggedIn");
+const measureMiddleware = (middleware) => {
+  return (req, res, next) => {
+    const start = Date.now();
+    middleware(req, res, () => {
+      const duration = Date.now() - start;
+      console.log(
+        `${middleware.name || "Anonymous Middleware"} - ${duration}ms`
+      );
+      next();
+    });
+  };
+};
 
 router.post("/register", OwnerRegistrationValidator, OwnerRegistration);
 router.post("/login", OwnerLoginValidator, OwnerLogin);
